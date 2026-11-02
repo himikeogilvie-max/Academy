@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================== THEMES ============================== */
+.theme-dark {
+  --bg: 5 5 6;
+  --fg: 231 234 238;
+  --accent: 125 249 200;
+  --signal: 255 179 71;
+  --field: 125 249 200; /* ambient flicker digits */
+  --panel-bg: 255 255 255;
+  --panel-bg-alpha: 0.022;
+  --panel-border: 255 255 255;
+  --panel-border-alpha: 0.07;
+  --grid: 255 255 255;
+  --grid-alpha: 0.025;
+  --card: 24 26 30; /* solid surface for modals */
+  color-scheme: dark;
+}
+
+.theme-light {
+  --bg: 233 231 226; /* off-white silver (matches juice.ext mark) */
+  --fg: 26 28 32; /* graphite ink */
+  --accent: 15 118 110; /* refined teal */
+  --signal: 180 83 9; /* amber-700 */
+  --field: 26 28 32;
+  --panel-bg: 255 255 255;
+  --panel-bg-alpha: 0.6;
+  --panel-border: 26 28 32;
+  --panel-border-alpha: 0.1;
+  --grid: 26 28 32;
+  --grid-alpha: 0.04;
+  --card: 255 255 255; /* solid surface for modals + panels */
+  color-scheme: light;
+}
+
+.theme-warm {
+  --bg: 234 227 214; /* beige */
+  --fg: 43 36 25; /* warm espresso ink */
+  --accent: 121 85 61; /* warm bronze-brown (no orange) */
+  --signal: 148 68 78; /* rosewood */
+  --field: 121 85 61;
+  --panel-bg: 250 245 236;
+  --panel-bg-alpha: 1;
+  --panel-border: 43 36 25;
+  --panel-border-alpha: 0.12;
+  --grid: 43 36 25;
+  --grid-alpha: 0.045;
+  --card: 250 245 236; /* warm cream */
+  color-scheme: light;
+}
+
+/* ---- warm family ---- */
+.theme-sand {
+  --bg: 240 234 222; /* light sand */
+  --fg: 60 50 35;
+  --accent: 166 124 82; /* camel */
+  --signal: 146 93 62; /* saddle */
+  --field: 166 124 82;
+  --panel-border: 60 50 35;
+  --panel-border-alpha: 0.12;
+  --grid: 60 50 35;
+  --grid-alpha: 0.04;
+  --card: 252 248 240;
+  color-scheme: light;
+}
+
+.theme-olive {
+  --bg: 232 230 216; /* warm parchment */
+  --fg: 42 42 30;
+  --accent: 106 112 60; /* olive */
+  --signal: 148 68 78; /* rosewood */
+  --field: 106 112 60;
+  --panel-border: 42 42 30;
+  --panel-border-alpha: 0.12;
+  --grid: 42 42 30;
+  --grid-alpha: 0.045;
+  --card: 248 246 236;
+  color-scheme: light;
+}
+
+.theme-mocha {
+  --bg: 28 22 18; /* deep coffee */
+  --fg: 236 227 215;
+  --accent: 196 160 122; /* latte */
+  --signal: 176 104 104; /* dried rose */
+  --field: 196 160 122;
+  --panel-border: 236 227 215;
+  --panel-border-alpha: 0.1;
+  --grid: 236 227 215;
+  --grid-alpha: 0.03;
+  --card: 40 32 26;
+  color-scheme: dark;
+}
+
+/* ---- cool family ---- */
+.theme-sage {
+  --bg: 226 232 226; /* sage mist */
+  --fg: 28 36 32;
+  --accent: 52 120 96; /* pine */
+  --signal: 180 83 9; /* amber */
+  --field: 52 120 96;
+  --panel-border: 28 36 32;
+  --panel-border-alpha: 0.1;
+  --grid: 28 36 32;
+  --grid-alpha: 0.04;
+  --card: 247 250 247;
+  color-scheme: light;
+}
+
+.theme-midnight {
+  --bg: 8 12 20; /* midnight navy */
+  --fg: 226 232 240;
+  --accent: 110 168 254; /* soft azure */
+  --signal: 255 179 71; /* amber */
+  --field: 110 168 254;
+  --panel-border: 226 232 240;
+  --panel-border-alpha: 0.09;
+  --grid: 226 232 240;
+  --grid-alpha: 0.028;
+  --card: 18 24 38;
+  color-scheme: dark;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  overflow: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* ---- Techy background grid + noise ---- */
+.bg-grid {
+  background-image:
+    linear-gradient(rgb(var(--grid) / var(--grid-alpha)) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--grid) / var(--grid-alpha)) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.bg-radial {
+  background:
+    radial-gradient(900px 600px at 80% -10%, rgb(var(--accent) / 0.05), transparent 60%),
+    radial-gradient(700px 500px at 0% 100%, rgb(var(--accent) / 0.04), transparent 55%);
+}
+
+.noise::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Scrollbars ---- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--fg) / 0.12);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--accent) / 0.4);
+}
+
+/* ---- Reusable surfaces (solid — panels hide the grid behind them) ---- */
+.panel {
+  background: rgb(var(--card));
+  border: 1px solid rgb(var(--panel-border) / var(--panel-border-alpha));
+  border-radius: 14px;
+}
+.theme-light .panel,
+.theme-warm .panel,
+.theme-sand .panel,
+.theme-olive .panel,
+.theme-sage .panel {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.panel-hover {
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.panel-hover:hover {
+  border-color: rgb(var(--accent) / 0.4);
+  transform: translateY(-2px);
+}
+
+.tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--fg) / 0.45);
+}
+
+.accent-text {
+  color: rgb(var(--accent));
+}
+
+.glow {
+  box-shadow: 0 0 0 1px rgb(var(--accent) / 0.25), 0 0 24px rgb(var(--accent) / 0.18);
+}
+
+/* corner brackets for "HUD" panels */
+.hud {
+  position: relative;
+}
+.hud::before,
+.hud::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: rgb(var(--accent) / 0.5);
+  border-style: solid;
+}
+.hud::before {
+  top: 8px;
+  left: 8px;
+  border-width: 1px 0 0 1px;
+}
+.hud::after {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 1px 1px 0;
+}
+
+.caret::after {
+  content: "▋";
+  margin-left: 1px;
+  color: rgb(var(--accent));
+  animation: blink 1s step-end infinite;
+}
+
+.selectable {
+  user-select: text;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.brand-mark {
+  font-family: "Poppins", "Space Grotesk", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* on dark schemes, drop the faint light divider between the sidebar and the bar/content */
+.theme-dark aside,
+.theme-mocha aside,
+.theme-midnight aside {
+  border-right-color: transparent;
+}
+
+/* ---- Globe member beacons ---- */
+@keyframes beacon {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+.beacon-ring {
+  animation: beacon 1.9s ease-out infinite;
+}
